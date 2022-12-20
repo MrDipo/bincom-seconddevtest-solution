@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Polling Unit Results Delta State</title>
+  <style>
+    /* Add some style to the navbar */
+    nav {
+      background-color: lightgrey;
+      padding: 20px;
+      text-align: center;
+    }
+    nav a {
+      color: black;
+      text-decoration: none;
+      font-size: 24px;
+      margin: 0 10px;
+    }
+    nav a:hover {
+      color: white;
+    }
+    h1, h2 {
+      text-align: center;
+    }
+    /* Add some style to the table */
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    td, th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+    th {
+      background-color: lightgrey;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <!-- Create the navbar -->
+  <nav>
+    <a href="/dashboard/pu-single">All PU Results</a>
+    <a href="/dashboard/lga-single">LGA Results</a>
+    <a href="/dashboard/add-results">Add Result</a>
+    <a href="#">Help</a>
+  </nav>
+  <h1>Select Polling Unit to View Result</h1>
+  <!-- Allow user select which polling unit to display-->
+  <form method="post">
+    {% csrf_token %}
+    <label for="dropdown">Select a polling unit:</label>
+    <select id="dropdown" name="dropdown">
+        {% for name in pu_names %}
+            <option value="{{ name.polling_unit_name }}">{{ name.polling_unit_name }}</option>
+        {% endfor %}
+    </select>
+    <input type="submit" value="Submit">
+  </form>
+  <h2>{{ pu_name }}</h2>
+  <!-- Create the table -->
+  <table>
+    <thead>
+      <tr>
+        <th>Result ID</th>
+        <th>Polling Unit ID</th>
+        <th>Party</th>
+        <th>Score</th>
+        <th>Entered By</th>
+        <th>Date</th>
+        <th>User IP</th>
+      </tr>
+    </thead> 
+    <tbody>
+      {% for result in pu_results %}
+      <tr>
+        <td>{{result.result_id}}</td>
+        <td>{{result.polling_unit_uniqueid}}</td>
+        <td>{{result.party_abbreviation}}</td>
+        <td>{{result.party_score}}</td>
+        <td>{{result.entered_by_user}}</td>
+        <td>{{result.date_entered}}</td>
+        <td>{{result.user_ip_address}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</body>
+</html>
