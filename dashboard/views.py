@@ -36,7 +36,7 @@ def add_results(request):
         print(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Contact request submitted successfully.')
+            messages.success(request, 'Result submitted successfully.')
             return render(request, 'add-results.html', {'form': AnnouncedPUResultForm,})
     return render(request, 'add-results.html', {'form': AnnouncedPUResultForm,})
 
